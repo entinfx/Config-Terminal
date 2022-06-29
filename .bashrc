@@ -64,26 +64,11 @@ fi
 # \W - pwd
 # \w - pwd (full path)
 #
-# Color:
-# \[\033[ATTRIBUTE;COLORm\]
+# Color (16 colors):
+# \[\033[ATTRIBUTE;XXm\] where XX is color code
 #
-# COLOR:
-# 30 - black
-# 34 - blue
-# 36 - cyan
-# 32 - green
-# 35 - purple
-# 31 - red
-# 37 - white
-# 33 - yellow
-# 00 - default
-# 91 - light red
-# 92 - light green
-# 93 - light yellow
-# 94 - light blue
-# 95 - light magenta
-# 96 - light cyan
-# 97 - white
+# Color (256 colors):
+# \e[38;5;XXXm where XXX is color code
 #
 # ATTRIBUTE (can be empty, no semicolon):
 # 0 - normal text
@@ -94,7 +79,8 @@ fi
 # 8 - hidden text
 
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}\[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[31m\]\$(parse_git_branch)\[\033[00m\] $ "
+    PS1="${debian_chroot:+($debian_chroot)}\e[38;5;104m\u@\h\[\033[00m\]:\e[38;5;36m\w\\e[38;5;214m\$(parse_git_branch)\[\033[00m\] $ "
+    # PS1="${debian_chroot:+($debian_chroot)}\[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[31m\]\$(parse_git_branch)\[\033[00m\] $ "
     # ORIGINAL PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[96m\]\$(parse_git_branch)\[\033[00m\] $ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -107,7 +93,7 @@ parse_git_branch() {
 }
 
 # Run Neofetch on launch
-neofetch
+# neofetch
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
