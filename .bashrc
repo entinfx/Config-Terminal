@@ -56,31 +56,24 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-# Custom prompt
-
-# Special characters:
+# -- ANSI Escape Codes --
+# Format: ESC[38;5;#m (foreground) or ESC[48;5;COLORm (background) where
+# ESC is an escape code - \u001b (Unicode), \033 (Octal), \x1b (Hexadecimal) or
+#     \e (C-escape).
+# # is one of the 256 (8-bit) colors
+# To reset all colors use ESC[0m
+#
+# In 256 color mode, first 16 colors are standard 8 and high-intensity 8 colors
+# followed by 216 normal colors and 24 grayscape colors.
+#
+# -- Special Characters --
 # \u - user name
 # \h - host name
-# \W - pwd
-# \w - pwd (full path)
+# \W - current directory
+# \w - current directory (full path)
 #
-# Color (16 colors):
-# \[\033[ATTRIBUTE;XXm\] where XX is color code
-#
-# Color (256 colors):
-# \e[38;5;XXXm where XXX is color code
-#
-# ATTRIBUTE (can be empty, no semicolon):
-# 0 - normal text
-# 1 - bold or light text
-# 2 - dim text
-# 4 - underlined text
-# 7 - reverse colored text
-# 8 - hidden text
-
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}\e[38;5;104m\u@\h\[\033[00m\]:\e[38;5;36m\w\\e[38;5;214m\$(parse_git_branch)\[\033[00m\] $ "
-    # PS1="${debian_chroot:+($debian_chroot)}\[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[31m\]\$(parse_git_branch)\[\033[00m\] $ "
+    PS1="${debian_chroot:+($debian_chroot)}\033[38;5;104m\u@\h\e[0m: \033[38;5;36m\w\033[38;5;214m\$(parse_git_branch)\033[0m $ "
     # ORIGINAL PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[96m\]\$(parse_git_branch)\[\033[00m\] $ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -91,9 +84,6 @@ unset color_prompt force_color_prompt
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-
-# Run Neofetch on launch
-# neofetch
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
