@@ -56,6 +56,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# -- Custom Prompt ---
 # -- ANSI Escape Codes --
 # Format: ESC[38;5;#m (foreground) or ESC[48;5;COLORm (background) where
 # ESC is an escape code - \u001b (Unicode), \033 (Octal), \x1b (Hexadecimal) or
@@ -73,7 +74,7 @@ fi
 # \w - current directory (full path)
 #
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}\033[38;5;104m\u@\h\e[0m: \033[38;5;36m\w\033[38;5;214m\$(parse_git_branch)\033[0m $ "
+    PS1="${debian_chroot:+($debian_chroot)}\033[38;5;104m\u@\h\e[0m: \033[38;5;36m\w\033[38;5;214m\$(parse_git_branch)\033[0m $ " # 256-color mode only
     # ORIGINAL PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[96m\]\$(parse_git_branch)\[\033[00m\] $ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
